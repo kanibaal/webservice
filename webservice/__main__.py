@@ -19,6 +19,9 @@ async def issue_opened_event(event, gh, *args, **kwargs):
     message = f"Thanks for the report @{author}! I will look into it ASAP! (I'm a bot)."
     await gh.post(url, data={"body": message})
 
+async def hello(request):
+    return web.Response(status=200, text="Hello world!\n")
+
 async def main(request):
     body = await request.read()
 
@@ -36,6 +39,7 @@ async def main(request):
 if __name__ == "__main__":
     app = web.Application()
     app.router.add_post("/", main)
+    app.router.add_get("/", hello)
     port = os.environ.get("PORT")
     if port is not None:
         port = int(port)
